@@ -14,7 +14,28 @@ skinsMark = 0
 settingsMark = 0
 backMark = 0
 
+def play_button_pressed():
+    t = 40
+    w = screenSizeX / 3 - t
+    h = screenSizeY / 2 - 2 * t
+    marTop = 4 * t
+    screen.fill('purple')
+    for i in range(2):
+        marLeft = 2 * t
+        for j in range(3):
+            pygame.draw.rect(screen, (0, 0, 255), [marLeft, marTop, w - t, h - t], 0)
+            marLeft += w
+        marTop += h
+    screen.blit(back, backBoxS)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+            pygame.quit()
+            sys.exit()
 
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            checkPlayButtons(event.pos)
+            if page != 'play':
+                checkHomeButtons((0, 0))
 def checkHomeButtons(pos):
     # Play button
     global playS
@@ -167,27 +188,6 @@ while True:
                 checkHomeButtons(event.pos)
                 screen.blit(text, textRect)
     if page == 'play':
-        t = 40
-        w = screenSizeX / 3 - t
-        h = screenSizeY / 2 - 2 * t
-        marTop = 4 * t
-        screen.fill('purple')
-        for i in range(2):
-            marLeft = 2 * t
-            for j in range(3):
-                pygame.draw.rect(screen, (0, 0, 255), [marLeft, marTop, w - t, h - t], 0)
-                marLeft += w
-            marTop += h
-        screen.blit(back, backBoxS)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-                pygame.quit()
-                sys.exit()
-
-
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                checkPlayButtons(event.pos)
-                if page != 'play':
-                    checkHomeButtons((0, 0))
+        play_button_pressed()
 
     pygame.display.update()
