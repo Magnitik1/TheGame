@@ -4,8 +4,8 @@ import time
 
 pygame.init()
 
-screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-# screen = pygame.display.set_mode((1300, 700))
+# screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+screen = pygame.display.set_mode((1300, 700))
 screenSizeX, screenSizeY = screen.get_size()
 pygame.display.set_caption('The Game')
 
@@ -84,12 +84,12 @@ def checkPlayButtons(pos):
         page = 'home'
 
 
-backgroundColor = 'blue'
+backgroundColor = 'white'
 screen.fill(backgroundColor)
 
 # Play button
 
-imp = pygame.image.load(".\\imgs\\play.jpg")
+imp = pygame.image.load(".\\imgs\\play.png")
 playS = pygame.transform.scale(imp, (screenSizeX / 5, screenSizeX / 5))
 playBoxS = playS.get_rect()
 playBoxS.center = (screenSizeX / 2, screenSizeY / 1.85)
