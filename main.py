@@ -58,5 +58,9 @@ while True:
                 screen.blit(text, textRect)
     if props.page == 'play':
         play.play_button_pressed(screen, full_back_button)
+    # if props.page == 'settings':
+    #     settings.settings_button_pressed()
+    # if props.page == 'skins':
+    #     skins.skins_button_pressed()
 
     pygame.display.update()
