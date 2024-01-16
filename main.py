@@ -3,26 +3,19 @@ import sys
 import time
 import home
 import props
+import play
 
 pygame.init()
 
 # screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 screen = pygame.display.set_mode((1300, 700))
 pygame.display.set_caption('The Game')
-
-
 screenSizeX, screenSizeY = screen.get_size()
-
-
-
 screen.fill(props.backgroundColor)
-
-
-
 home.create_play_button(screen)
 home.create_skins_button(screen)
 home.create_settings_button(screen)
-home.create_back_button(screen)
+full_back_button = home.create_back_button(screen)
 
 font = pygame.font.Font('freesansbold.ttf', 100)
 text = font.render('The Game', True, 'green')
@@ -64,6 +57,6 @@ while True:
                 home.checkHomeButtons(event.pos, screen)
                 screen.blit(text, textRect)
     if props.page == 'play':
-        home.play_button_pressed(screen)
+        play.play_button_pressed(screen, full_back_button)
 
     pygame.display.update()

@@ -67,12 +67,14 @@ def create_back_button(screen):
     global backBoxL
     global backS
     global backL
-    global back
     imp = pygame.image.load(".\\imgs\\back.webp")
+    backL = imp
+    backBoxL = imp
     imp = pygame.transform.rotate(imp, 180)
-    back = pygame.transform.scale(imp, (screenSizeX / 10, screenSizeX / 10))
-    backBoxS = back.get_rect()
+    backS = pygame.transform.scale(imp, (screenSizeX / 10, screenSizeX / 10))
+    backBoxS = backS.get_rect()
     backBoxS.center = (90, 80)
+    return {'backS': backS, 'backL': backL, 'backBoxS': backBoxS, 'backBoxL': backBoxL}
 
 
 def checkHomeButtons(pos, screen):
@@ -139,30 +141,6 @@ def checkHomeButtons(pos, screen):
         screen.blit(playS, playBoxS)
 
 
-
-def play_button_pressed(screen):
-    screenSizeX, screenSizeY = screen.get_size()
-    t = 40
-    w = screenSizeX / 3 - t
-    h = screenSizeY / 2 - 2 * t
-    marTop = 4 * t
-    screen.fill('purple')
-    for i in range(2):
-        marLeft = 2 * t
-        for j in range(3):
-            pygame.draw.rect(screen, (0, 0, 255), [marLeft, marTop, w - t, h - t], 0)
-            marLeft += w
-        marTop += h
-    screen.blit(back, backBoxS)
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-            pygame.quit()
-            sys.exit()
-
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            checkPlayButtons(event.pos)
-            if props.page != 'play':
-                checkHomeButtons((0, 0), screen)
 
 
 def checkPlayButtons(pos):
