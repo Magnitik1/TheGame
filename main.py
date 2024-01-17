@@ -24,29 +24,33 @@ textRect.center = (screenSizeX / 2, 150)
 colorR = 190
 colorG = 170
 colorB = 160
-cr = 0.12
-cg = -0.09
-cb = 0.06
+cr = 8
+cg = 7
+cb = 6
+
+# custom user event to change color
+CHANGE_COLOR = pygame.USEREVENT + 1
+pygame.time.set_timer(CHANGE_COLOR, 100)
 while True:
-
-
-    if props.page == 'home':
-        text = font.render('The Game', True, (colorR, colorG, colorB))
-        colorR += cr
-        colorG += cg
-        colorB += cb
-        if colorR >= 250 or colorR <= 160:
-            cr = -cr
-        if colorG >= 250 or colorG <= 160:
-            cg = -cg
-        if colorB >= 250 or colorB <= 160:
-            cb = -cb
-        screen.blit(text, textRect)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 pygame.quit()
                 sys.exit()
+        if props.page == 'home':
 
+            # change text color each XX ms
+            if event.type == CHANGE_COLOR:
+                text = font.render('The Game', True, (colorR, colorG, colorB))
+                colorR += cr
+                colorG += cg
+                colorB += cb
+                if colorR >= 230 or colorR <= 160:
+                    cr = -cr
+                if colorG >= 230 or colorG <= 160:
+                    cg = -cg
+                if colorB >= 230 or colorB <= 160:
+                    cb = -cb
+                screen.blit(text, textRect)
             # on resize changes
             if event.type == pygame.VIDEORESIZE:
                 screenSizeX, screenSizeY = screen.get_size()
@@ -57,7 +61,7 @@ while True:
                 font = pygame.font.Font('freesansbold.ttf', int(screenSizeX / 11))
                 text = font.render('The Game', True, 'green')
                 textRect = text.get_rect()
-                textRect.center = (screenSizeX / 2, 150)
+                textRect.center = (screenSizeX / 2, screenSizeY / 5.5)
                 screen.blit(text, textRect)
 
                 pygame.display.update()
@@ -77,7 +81,8 @@ while True:
                 home.checkHomeButtons(event.pos, screen)
                 screen.blit(text, textRect)
     if props.page == 'play':
-        play.play_button_pressed(screen, full_back_button)
+        play.play_button_pressed(screen, home.create_back_button)
+
     # if props.page == 'settings':
     #     settings.settings_button_pressed()
     # if props.page == 'skins':

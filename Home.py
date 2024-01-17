@@ -68,18 +68,17 @@ def create_back_button(screen):
     global backS
     global backL
     imp = pygame.image.load(".\\imgs\\back.webp")
-    backL = imp
-    backBoxL = imp
     imp = pygame.transform.rotate(imp, 180)
-    backS = pygame.transform.scale(imp, (screenSizeX / 10, screenSizeX / 10))
+    backS = pygame.transform.scale(imp, (screenSizeX / 10, screenSizeY / 5.5))
     backBoxS = backS.get_rect()
-    backBoxS.center = (90, 80)
+    backBoxS.center = (screenSizeX/13, screenSizeY/6)
+    backL = pygame.transform.scale(imp, (screenSizeX / 8, screenSizeY / 4.5))
+    backBoxL = backL.get_rect()
+    backBoxL.center = (screenSizeX / 13, screenSizeY / 6)
     return {'backS': backS, 'backL': backL, 'backBoxS': backBoxS, 'backBoxL': backBoxL}
 
 
 def checkHomeButtons(pos, screen):
-    screenSizeX, screenSizeY = screen.get_size()
-
     global playS
     global playBoxL
     global playL
@@ -140,11 +139,3 @@ def checkHomeButtons(pos, screen):
         screen.blit(skinsS, skinsBoxS)
         screen.blit(playS, playBoxS)
 
-
-
-
-def checkPlayButtons(pos):
-    global backBoxS
-
-    if backBoxS.collidepoint(pos):  # HOVERED
-        props.page = 'home'
