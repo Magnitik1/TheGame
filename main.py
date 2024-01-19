@@ -24,20 +24,19 @@ textRect.center = (screenSizeX / 2, 150)
 colorR = 190
 colorG = 170
 colorB = 160
-cr = 8
-cg = 7
-cb = 6
+cr = 4
+cg = 3
+cb = 2
 
 # custom user event to change color
 CHANGE_COLOR = pygame.USEREVENT + 1
-pygame.time.set_timer(CHANGE_COLOR, 100)
+pygame.time.set_timer(CHANGE_COLOR, 60)
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
                 pygame.quit()
                 sys.exit()
         if props.page == 'home':
-
             # change text color each XX ms
             if event.type == CHANGE_COLOR:
                 text = font.render('The Game', True, (colorR, colorG, colorB))
