@@ -30,8 +30,8 @@ def create_Select_level_button(screen, x, y, x_pos, y_pos):
 def checkPlayButtons(pos, screen):
     if full_back_button['backBoxS'].collidepoint(pos):  # HOVERED
         screen.blit(full_back_button['backL'], full_back_button['backBoxL'])
-    for i in range(6):
-        if all_levels[i]['number']
+    # for i in range(6):
+    #     if all_levels[i]['number']
         # props.page = 'home'
 def play_button_pressed(screen, create_back_button):
     global full_back_button
@@ -44,7 +44,7 @@ def play_button_pressed(screen, create_back_button):
     for i in range(2):
         margin_left = screenSizeX/4
         for j in range(3):
-            create_Select_level_button(screen, j, i, margin_left, margin_top, all_levels)
+            create_Select_level_button(screen, j, i, margin_left, margin_top)
             margin_left += w
         margin_top += h
     screen.blit(full_back_button['backS'], full_back_button['backBoxS'])
