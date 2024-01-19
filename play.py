@@ -15,7 +15,7 @@ def create_Select_level_button(screen, c, x_pos, y_pos):
     levelBoxS = levelS.get_rect()
     levelBoxS.center = (x_pos, y_pos)
 
-    levelL = pygame.transform.scale(imp, (screenSizeX / 3.5, screenSizeY / 2.8))
+    levelL = pygame.transform.scale(imp, (screenSizeX / 3.5, screenSizeY / 2.61))
     levelBoxL = levelL.get_rect()
     levelBoxL.center = (x_pos, y_pos)
 
