@@ -67,14 +67,14 @@ def create_back_button(screen):
     global backBoxL
     global backS
     global backL
-    imp = pygame.image.load(".\\imgs\\back.webp")
+    imp = pygame.image.load(".\\imgs\\back.png")
     imp = pygame.transform.rotate(imp, 180)
-    backS = pygame.transform.scale(imp, (screenSizeX / 10, screenSizeY / 5.5))
+    backS = pygame.transform.scale(imp, (screenSizeX / 14, screenSizeY / 5.2))
     backBoxS = backS.get_rect()
-    backBoxS.center = (screenSizeX/13, screenSizeY/6)
-    backL = pygame.transform.scale(imp, (screenSizeX / 8, screenSizeY / 4.5))
+    backBoxS.center = (screenSizeX/16, screenSizeY/7.5)
+    backL = pygame.transform.scale(imp, (screenSizeX / 11, screenSizeY / 4.2))
     backBoxL = backL.get_rect()
-    backBoxL.center = (screenSizeX / 13, screenSizeY / 6)
+    backBoxL.center = (screenSizeX / 16, screenSizeY / 7.5)
     return {'backS': backS, 'backL': backL, 'backBoxS': backBoxS, 'backBoxL': backBoxL}
 
 
