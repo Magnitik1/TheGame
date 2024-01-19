@@ -72,7 +72,7 @@ while True:
                     props.page = 'play'
                     break
                 if home.skinsBoxL.collidepoint(event.pos):
-                    props.page = 'play'
+                    props.page = 'skins'
                     print("Skins")
                 if home.settingsBoxL.collidepoint(event.pos):
                     props.page = 'play'
@@ -84,8 +84,8 @@ while True:
         play.play_button_pressed(screen, home.create_back_button)
 
     # if props.page == 'settings':
-    #     settings.settings_button_pressed()
-    # if props.page == 'skins':
-    #     skins.skins_button_pressed()
+    #     settings.settings_button_pressed(screen, home.create_back_button)
+    if props.page == 'skins':
+        skins.skins_button_pressed(screen, home.create_back_button)
 
     pygame.display.update()
