@@ -4,6 +4,8 @@ import time
 import home
 import props
 import play
+import levels.level1 as level1
+import levels.level2 as level2
 
 pygame.init()
 
@@ -17,7 +19,7 @@ home.create_skins_button(screen)
 home.create_settings_button(screen)
 full_back_button = home.create_back_button(screen)
 
-font = pygame.font.Font('freesansbold.ttf', int(screenSizeX/11))
+font = pygame.font.Font('freesansbold.ttf', int(screenSizeX / 11))
 text = font.render('The Game', True, 'green')
 textRect = text.get_rect()
 textRect.center = (screenSizeX / 2, 150)
@@ -34,8 +36,8 @@ pygame.time.set_timer(CHANGE_COLOR, 60)
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-                pygame.quit()
-                sys.exit()
+            pygame.quit()
+            sys.exit()
         if props.page == 'home':
             # change text color each XX ms
             if event.type == CHANGE_COLOR:
@@ -81,6 +83,21 @@ while True:
                 screen.blit(text, textRect)
     if props.page == 'play':
         play.play_button_pressed(screen, home.create_back_button)
+    if 'level' in props.page:
+        lvl = int(props.page.replace('level', ''))
+        match lvl:
+            case 1:
+                level1.start(screen)
+            case 2:
+                level2.start(screen)
+            # case 3:
+            #     level3.start()
+            # case 4:
+            #     level4.start()
+            # case 5:
+            #     level5.start()
+            # case 6:
+            #     level6.start()
 
     # if props.page == 'settings':
     #     settings.settings_button_pressed()
