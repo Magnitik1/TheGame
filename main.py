@@ -4,6 +4,7 @@ import time
 import home
 import props
 import play
+import skins
 
 pygame.init()
 
@@ -86,5 +87,6 @@ while True:
     #     settings.settings_button_pressed(screen, home.create_back_button)
     if props.page == 'skins':
         skins.skins_button_pressed(screen, home.create_back_button)
+
 
     pygame.display.update()
