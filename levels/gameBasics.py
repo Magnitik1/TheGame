@@ -16,6 +16,7 @@ y_position = 100
 def draw_character(screen):
     screenSizeX, screenSizeY = screen.get_size()
     pygame.draw.rect(screen, 'green', (screenSizeX/2 - screenSizeX / 15, y_position, screenSizeX / 15, screenSizeX / 15)) # x, y, width, height
+
     pass
 
 
