@@ -9,7 +9,6 @@ import levels.level2 as level2
 import skins
 
 pygame.init()
-
 # screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 screen = pygame.display.set_mode((1300, 700), pygame.RESIZABLE)
 pygame.display.set_caption('The Game')
@@ -20,12 +19,13 @@ home.create_skins_button(screen)
 home.create_settings_button(screen)
 full_back_button = home.create_back_button(screen)
 
-
-
 font = pygame.font.Font(props.globalFont, int(screenSizeX / 11))
 text = font.render('The Game', True, 'green')
 textRect = text.get_rect()
 textRect.center = (screenSizeX / 2, 150)
+
+resize_ability = True
+
 colorR = 190
 colorG = 170
 colorB = 160
@@ -36,11 +36,38 @@ cb = 2
 # custom user event to change color
 CHANGE_COLOR = pygame.USEREVENT + 1
 pygame.time.set_timer(CHANGE_COLOR, 60)
+
+GRAVITY_event = pygame.USEREVENT + 2
+pygame.time.set_timer(GRAVITY_event, 1)
+
+y_position = 0
+can_jump = True
+in_mid_jump = False
+
 while True:
     for event in pygame.event.get():
+        if event.type == 32781:  # if make it fullscreen
+            screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+            screenSizeX, screenSizeY = screen.get_size()
+            resize_ability = False
         if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
             pygame.quit()
             sys.exit()
+        if 'level' in props.page:
+            if event.type == GRAVITY_event:
+                if y_position < screenSizeY - screenSizeY / 5 - screenSizeX / 100:
+                    y_position += screenSizeY * 0.0015
+                    can_jump = False
+                else:
+                    can_jump = True
+                if can_jump and event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                    in_mid_jump = True
+                if in_mid_jump:
+                    if y_position > screenSizeY/2:
+                        y_position -= screenSizeY * 0.0015
+                    else:
+                        in_mid_jump = False
+
         if props.page == 'home':
             # change text color each XX ms
             if event.type == CHANGE_COLOR:
@@ -87,10 +114,13 @@ while True:
     if props.page == 'play':
         play.play_button_pressed(screen, home.create_back_button)
     if 'level' in props.page:
+        if resize_ability:
+            pygame.display.set_mode((screenSizeX, screenSizeY))
+            resize_ability = False
         lvl = int(props.page.replace('level', ''))
         match lvl:
             case 1:
-                level1.start(screen)
+                level1.start(screen, y_position)
             case 2:
                 level2.start(screen)
             # case 3:
