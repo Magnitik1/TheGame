@@ -78,11 +78,13 @@ def play_button_pressed(screen, create_back_button):
             sys.exit()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
-            for i in range(6):
-                if all_levels[i]['levelBoxL'].collidepoint(event.pos):
-                    print(f'level{i + 1}')
+            for i in range(1, 7):
+                if all_levels[i-1]['levelBoxL'].collidepoint(event.pos):
+                    print(f'level{i}')
+                    props.page = f'level{i}'
                     break
-                # props.page = f'level{i}'
+
+
             if full_back_button["backBoxL"].collidepoint(event.pos):
                 playMark = 1
                 props.page = 'home'
