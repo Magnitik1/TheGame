@@ -1,2 +1,2 @@
 page = 'home'
-backgroundColor = 'white'
+backgroundColor = '#006dfb'
