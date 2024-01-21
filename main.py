@@ -19,7 +19,9 @@ home.create_skins_button(screen)
 home.create_settings_button(screen)
 full_back_button = home.create_back_button(screen)
 
-font = pygame.font.Font('freesansbold.ttf', int(screenSizeX / 11))
+
+
+font = pygame.font.Font(props.globalFont, int(screenSizeX / 11))
 text = font.render('The Game', True, 'green')
 textRect = text.get_rect()
 textRect.center = (screenSizeX / 2, 150)
