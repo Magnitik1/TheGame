@@ -77,6 +77,11 @@ def play_button_pressed(screen, create_back_button):
             pygame.quit()
             sys.exit()
 
+        if event.type == 32781:  # if make it fullscreen
+            screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+            resize_ability = False
+            is_full_screen = True
+
         if event.type == pygame.MOUSEBUTTONDOWN:
             for i in range(1, 7):
                 if all_levels[i-1]['levelBoxL'].collidepoint(event.pos):
@@ -88,7 +93,8 @@ def play_button_pressed(screen, create_back_button):
             if full_back_button["backBoxL"].collidepoint(event.pos):
                 playMark = 1
                 props.page = 'home'
-                home.checkHomeButtons((0, 0), screen)
                 print("back")
+                resize_home = True
+                home.home_resized(screen)
         if event.type == pygame.MOUSEMOTION:
             checkPlayButtons(event.pos, screen)
