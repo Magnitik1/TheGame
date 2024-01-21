@@ -7,6 +7,7 @@ import play
 import levels.level1 as level1
 import levels.level2 as level2
 import skins
+import levels.gameBasics as gameBasics
 
 pygame.init()
 # screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -43,7 +44,7 @@ pygame.time.set_timer(GRAVITY_event, 1)
 y_position = 0
 can_jump = True
 in_mid_jump = False
-
+speed = 0.0010
 while True:
     for event in pygame.event.get():
         if event.type == 32781:  # if make it fullscreen
@@ -54,19 +55,31 @@ while True:
             pygame.quit()
             sys.exit()
         if 'level' in props.page:
-            if event.type == GRAVITY_event:
+            if event.type == GRAVITY_event and not in_mid_jump:
                 if y_position < screenSizeY - screenSizeY / 5 - screenSizeX / 100:
-                    y_position += screenSizeY * 0.0015
+                    y_position += screenSizeY * speed
+                    speed += 0.0001
                     can_jump = False
                 else:
                     can_jump = True
-                if can_jump and event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                    in_mid_jump = True
-                if in_mid_jump:
-                    if y_position > screenSizeY/2:
-                        y_position -= screenSizeY * 0.0015
-                    else:
-                        in_mid_jump = False
+                    speed = 0.0010
+            if can_jump and event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                in_mid_jump = True
+            if in_mid_jump:
+                if y_position > screenSizeY / 2.8:
+                    y_position -= screenSizeY * speed
+                    speed += 0.0001
+                else:
+                    speed = 0.0010
+                    in_mid_jump = False
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if full_back_button["backBoxL"].collidepoint(event.pos):
+                    playMark = 1
+                    props.page = 'play'
+                    # home.checkHomeButtons((0, 0), screen)
+                    print("back")
+            if event.type == pygame.MOUSEMOTION:
+                gameBasics.checkBackButtons(event.pos, screen, full_back_button)
 
         if props.page == 'home':
             # change text color each XX ms
@@ -120,7 +133,7 @@ while True:
         lvl = int(props.page.replace('level', ''))
         match lvl:
             case 1:
-                level1.start(screen, y_position)
+                level1.start(screen, y_position, full_back_button)
             case 2:
                 level2.start(screen)
             # case 3:
@@ -136,6 +149,5 @@ while True:
     #     settings.settings_button_pressed(screen, home.create_back_button)
     if props.page == 'skins':
         skins.skins_button_pressed(screen, home.create_back_button)
-
 
     pygame.display.update()

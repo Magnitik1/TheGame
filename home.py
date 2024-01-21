@@ -4,7 +4,6 @@ import props
 playMark = 0
 skinsMark = 0
 settingsMark = 0
-backMark = 0
 
 # Play button
 def create_play_button(screen):
