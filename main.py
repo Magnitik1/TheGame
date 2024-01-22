@@ -152,8 +152,10 @@ while True:
                 level6.start(screen, y_position, full_back_button)
 
     if props.page == 'settings':
-        settings.settings_button_pressed(screen)
+        screen.fill(props.backgroundColor)
+        settings.settings_button_pressed(screen, home.create_back_button)
     if props.page == 'skins':
+        screen.fill(props.backgroundColor)
         skins.skins_button_pressed(screen, home.create_back_button)
 
     pygame.display.update()
