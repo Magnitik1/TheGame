@@ -160,7 +160,7 @@ def create_select_button(screen):
     imp = pygame.image.load(".\\imgs\\select.png")
     selectS = pygame.transform.scale(imp, (screenSizeX / 6.5, screenSizeY / 6.5))
     selectBoxS = selectS.get_rect()
-    selectBoxS.center = (screenSizeX / 4.5, screenSizeY / 1.13) # placement
+    selectBoxS.center = (screenSizeX / 4.5, screenSizeY / 1.1) # placement
 
     # selectL = pygame.transform.scale(imp, (screenSizeX / 6.5, screenSizeY / 6.5))
     # selectBoxL = selectL.get_rect()
