@@ -1,5 +1,4 @@
 page = 'home'
-backgroundColor = '#006dfb'
-fontColor = 'white'
+backgroundColor = 'Dodger Blue'
 fontColor = 'white'
 globalFont = 'freesansbold.ttf'

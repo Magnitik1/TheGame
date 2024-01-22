@@ -152,7 +152,7 @@ while True:
                 level6.start(screen, y_position, full_back_button)
 
     if props.page == 'settings':
-        settings.settings_button_pressed(screen)
+        settings.settings_button_pressed(screen, home.create_back_button)
     if props.page == 'skins':
         skins.skins_button_pressed(screen, home.create_back_button)
 

@@ -12,8 +12,9 @@ changed_skin_number = 0
 changed_skin = skins_date[changed_skin_number]
 text_splitted = skins_date[current_skin_number].split('.png')
 text_name1 = text_splitted[0]
-
+back_flague = True
 def skins_button_pressed(screen, create_back_button):
+    global back_flague
     global full_back_button
     global current_skin_number
     global changed_skin_number
@@ -23,10 +24,11 @@ def skins_button_pressed(screen, create_back_button):
     global text_splitted
     screenSizeX, screenSizeY = screen.get_size()
     full_back_button = create_back_button(screen)
+
     w = screenSizeX / 3.7
     h = screenSizeY / 2.8
     margin_top = screenSizeY / 2.6
-    screen.fill('purple')
+    screen.fill(props.backgroundColor)
 
     imp = pygame.image.load(f".\\imgs\\{curren_skin}")
 
@@ -35,6 +37,10 @@ def skins_button_pressed(screen, create_back_button):
     skinBoxS.center = (screenSizeX / 4.35, screenSizeY / 2)
 
     screen.blit(skinS, skinBoxS)
+    if not back_flague:
+        screen.blit(full_back_button['backL'], full_back_button['backBoxL'])
+    else:
+        screen.blit(full_back_button['backS'], full_back_button['backBoxS'])
 
 
     imp2 = pygame.image.load(f".\\imgs\\{changed_skin}")
@@ -50,7 +56,6 @@ def skins_button_pressed(screen, create_back_button):
     create_right_arrow_button(screen)
     create_select_button(screen)
     create_skin_name(screen)
-    create_back_button_new(screen)
 
 
     for event in pygame.event.get():
@@ -58,6 +63,11 @@ def skins_button_pressed(screen, create_back_button):
             pygame.quit()
             sys.exit()
 
+        if event.type == pygame.MOUSEMOTION:
+            if full_back_button['backBoxS'].collidepoint(event.pos) and back_flague:
+                back_flague = False
+            elif not full_back_button['backBoxS'].collidepoint(event.pos) and not back_flague:
+                back_flague = True
         if event.type == pygame.MOUSEBUTTONDOWN:
             if selectBoxS.collidepoint(event.pos):
                 changed_skin_number = current_skin_number
@@ -85,7 +95,7 @@ def skins_button_pressed(screen, create_back_button):
                     curren_skin = skins_date[current_skin_number]
                     text_splitted = skins_date[current_skin_number].split('.png')
                     text_name1 = text_splitted[0]
-            if backbuttonBoxS.collidepoint(event.pos):
+            if full_back_button['backBoxL'].collidepoint(event.pos):
                 props.page = 'home'
                 home.checkHomeButtons((0, 0), screen)
                 print("back")
@@ -156,20 +166,21 @@ def create_select_button(screen):
     # selectBoxL = selectL.get_rect()
     # selectBoxL.center = (screenSizeX / center_posX, screenSizeX / center_posY)
     screen.blit(selectS, selectBoxS)
-def create_back_button_new(screen):
-    screenSizeX, screenSizeY = screen.get_size()
 
-    global backbuttonS
-    global backbuttonBoxS
-    global backbuttonL
-    global backbuttonBoxL
-
-    imp = pygame.image.load(".\\imgs\\button_back.png")
-    backbuttonS = pygame.transform.scale(imp, (screenSizeX / 10, screenSizeY / 6))
-    backbuttonBoxS = backbuttonS.get_rect()
-    backbuttonBoxS.center = (screenSizeX / 17, screenSizeY / 10) # placement
-
-    # selectL = pygame.transform.scale(imp, (screenSizeX / 6.5, screenSizeY / 6.5))
-    # selectBoxL = selectL.get_rect()
-    # selectBoxL.center = (screenSizeX / center_posX, screenSizeX / center_posY)
-    screen.blit(backbuttonS, backbuttonBoxS)
+# def create_back_button_new(screen):
+#     screenSizeX, screenSizeY = screen.get_size()
+#
+#     global backbuttonS
+#     global backbuttonBoxS
+#     global backbuttonL
+#     global backbuttonBoxL
+#
+#     imp = pygame.image.load(".\\imgs\\back.png")
+#     backbuttonS = pygame.transform.scale(imp, (screenSizeX / 10, screenSizeY / 6))
+#     backbuttonBoxS = backbuttonS.get_rect()
+#     backbuttonBoxS.center = (screenSizeX / 17, screenSizeY / 10) # placement
+#
+#     # selectL = pygame.transform.scale(imp, (screenSizeX / 6.5, screenSizeY / 6.5))
+#     # selectBoxL = selectL.get_rect()
+#     # selectBoxL.center = (screenSizeX / center_posX, screenSizeX / center_posY)
+#     screen.blit(backbuttonS, backbuttonBoxS)

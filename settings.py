@@ -1,6 +1,7 @@
 import pygame
 import sys
 import props
+import home
 
 pygame.init()
 screen = 0
@@ -17,7 +18,7 @@ frame_thickness = 5
 num_steps = 20
 # Set up fonts
 font = pygame.font.Font(None, 36)
-
+playMark = 1
 
 class GameControl:
     def __init__(self):
@@ -35,11 +36,24 @@ class GameControl:
                            ToggleButton(f"Button3", (1000 ,500 ))
                        ]
 
-    def update(self):
+    def update(self, full_back_button):
+        global playMark
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.MOUSEMOTION:
+                if full_back_button['backBoxS'].collidepoint(event.pos) and playMark == 1:
+                    playMark = 0
+                elif not full_back_button['backBoxL'].collidepoint(event.pos) and playMark == 0:
+                    playMark = 1
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if full_back_button['backBoxL'].collidepoint(event.pos):
+                    global running
+                    running = False
+                    props.page = 'home'
+                    print('back3')
+                    return
             self.volume_control.handle_event(event)
             self.theme_control.handle_event(event)
             self.options_button.handle_event(event)
@@ -51,7 +65,6 @@ class GameControl:
 
     def draw(self, screen):
         # Clear the screen
-        screen.fill(props.backgroundColor)
 
         # Update and draw the game controls
         self.volume_control.draw(screen)
@@ -258,14 +271,30 @@ class ToggleButton:
                     self.checkbox_checked = not self.checkbox_checked
 
 
+
+def back_button(screen, create_back_button):
+    full_back_button = create_back_button(screen)
+    if playMark == 1:
+        screen.blit(full_back_button['backS'], full_back_button['backBoxS'])
+    else:
+        screen.blit(full_back_button['backL'], full_back_button['backBoxL'])
+    return full_back_button
+
+
 # Create an instance of GameControl
 game_control = GameControl()
 
+running = True
 
-def settings_button_pressed(screen1):
+def settings_button_pressed(screen1, create_back_button):
     global screen
-
+    global running
+    running = True
     screen = screen1
-    while True:
-        game_control.update()
+    while running:
         game_control.draw(screen1)
+        screen.fill(props.backgroundColor)
+        game_control.update(back_button(screen, create_back_button))
+    home.checkHomeButtons((0, 0), screen)
+
+
