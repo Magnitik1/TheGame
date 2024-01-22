@@ -1,6 +1,6 @@
 import pygame
+import levels.gameBasics as gameBasics
 
 
-def start():
-    print('You are playing level 2!')
-    pass
+def start(screen, y_position, full_back_button):
+    gameBasics.draw_character(screen, y_position, full_back_button)

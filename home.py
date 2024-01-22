@@ -4,7 +4,17 @@ import props
 playMark = 0
 skinsMark = 0
 settingsMark = 0
-backMark = 0
+text, textRect, font = 0, 0, 0
+
+
+def home_resized(screen):
+    global text, textRect, font
+    screenSizeX, screenSizeY = screen.get_size()
+    screen.fill(props.backgroundColor)
+    create_play_button(screen)
+    create_skins_button(screen)
+    create_settings_button(screen)
+
 
 # Play button
 def create_play_button(screen):
@@ -41,6 +51,7 @@ def create_skins_button(screen):
     skinsBoxL.center = (screenSizeX / 4, screenSizeY / 1.85)
     screen.blit(skinsS, skinsBoxS)
 
+
 # Settings button
 def create_settings_button(screen):
     screenSizeX, screenSizeY = screen.get_size()
@@ -58,6 +69,7 @@ def create_settings_button(screen):
     settingsBoxL.center = (screenSizeX / 1.25, screenSizeY / 1.85)
     screen.blit(settingsS, settingsBoxS)
 
+
 # Back button
 def create_back_button(screen):
     screenSizeX, screenSizeY = screen.get_size()
@@ -70,7 +82,7 @@ def create_back_button(screen):
     imp = pygame.transform.rotate(imp, 180)
     backS = pygame.transform.scale(imp, (screenSizeX / 14, screenSizeY / 5.2))
     backBoxS = backS.get_rect()
-    backBoxS.center = (screenSizeX/16, screenSizeY/7.5)
+    backBoxS.center = (screenSizeX / 16, screenSizeY / 7.5)
     backL = pygame.transform.scale(imp, (screenSizeX / 11, screenSizeY / 4.2))
     backBoxL = backL.get_rect()
     backBoxL.center = (screenSizeX / 16, screenSizeY / 7.5)
@@ -137,4 +149,3 @@ def checkHomeButtons(pos, screen):
         screen.blit(settingsS, settingsBoxS)
         screen.blit(skinsS, skinsBoxS)
         screen.blit(playS, playBoxS)
-
