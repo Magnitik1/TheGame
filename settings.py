@@ -66,6 +66,7 @@ class GameControl:
         pygame.time.Clock().tick(30)
 
     def draw(self, screen):
+        # Clear the screen
 
         # Update and draw the game controls
         self.volume_control.draw(screen)
@@ -151,7 +152,7 @@ class VolumeControl:
 
 
 all_themes = [{'fontColor': props.fontColor, 'backgroundColor': props.backgroundColor},
-              {'fontColor': 'black', 'backgroundColor': 'red'}]
+              {'fontColor': 'black', 'backgroundColor': 'lightgrey'}]
 
 
 class ThemeControl:
@@ -167,6 +168,7 @@ class ThemeControl:
         print(props.background_color)
         self.button_color = white
         self.text_color = black
+
     def switch_theme(self):
         self.current_theme = 3 - self.current_theme  # Toggle between 1 and 2
         self.set_theme()
@@ -300,8 +302,6 @@ def back_button(screen, create_back_button):
 
 # Create an instance of GameControl
 game_control = GameControl()
-
-running = True
 
 
 def settings_button_pressed(screen1, create_back_button):
