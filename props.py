@@ -1,4 +1,5 @@
 page = 'home'
 backgroundColor = '#006dfb'
 fontColor = 'white'
+fontColor = 'white'
 globalFont = 'freesansbold.ttf'

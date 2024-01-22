@@ -6,7 +6,7 @@ import props
 import play
 import levels.level1 as level1
 import levels.level2 as level2
-
+import settings
 pygame.init()
 
 # screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
@@ -78,7 +78,7 @@ while True:
                     props.page = 'play'
                     print("Skins")
                 if home.settingsBoxL.collidepoint(event.pos):
-                    props.page = 'play'
+                    props.page = 'settings'
                     print("Settings")
             if event.type == pygame.MOUSEMOTION:
                 home.checkHomeButtons(event.pos, screen)
@@ -101,8 +101,8 @@ while True:
             # case 6:
             #     level6.start()
 
-    # if props.page == 'settings':
-    #     settings.settings_button_pressed()
+    if props.page == 'settings':
+        settings.settings_button_pressed(screen)
     # if props.page == 'skins':
     #     skins.skins_button_pressed()
 
