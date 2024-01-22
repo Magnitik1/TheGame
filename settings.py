@@ -2,6 +2,7 @@ import pygame
 import sys
 import props
 import home
+import math
 
 pygame.init()
 screen = 0
@@ -20,6 +21,7 @@ num_steps = 20
 font = pygame.font.Font(None, 36)
 playMark = 1
 
+
 class GameControl:
     def __init__(self):
 
@@ -27,13 +29,13 @@ class GameControl:
         self.theme_control = ThemeControl()
         self.options_button = Options()
         self.buttons = [
-                           ToggleButton(f"Awesome Feature", (250 , 500))
-                       ] +  [
-                           ToggleButton(f"Button1", (500 ,500 ))
-                       ] +  [
-                           ToggleButton(f"Button2", (750 ,500 ))
-                       ] +  [
-                           ToggleButton(f"Button3", (1000 ,500 ))
+                           ToggleButton(f"Awesome Feature", (250, 500))
+                       ] + [
+                           ToggleButton(f"Button1", (500, 500))
+                       ] + [
+                           ToggleButton(f"Button2", (750, 500))
+                       ] + [
+                           ToggleButton(f"Button3", (1000, 500))
                        ]
 
     def update(self, full_back_button):
@@ -99,13 +101,15 @@ class VolumeControl:
     def adjust_volume(self, delta):
         self.volume_level += delta / 100.0  # Delta is in the range [-100, 100], convert to [-1.0, 1.0]
         self.volume_level = max(0.0, min(1.0, self.volume_level))  # Ensure volume is within the valid range
+        self.volume_level += 0.0000000000000001
         pygame.mixer.music.set_volume(self.volume_level)
 
     def draw(self, screen):
         screenSizeX, screenSizeY = screen.get_size()
         # Draw volume label
         pygame.draw.rect(screen, frame_color, (
-            screenSizeX / 4 - frame_thickness, screenSizeY / 3.5 - frame_thickness, 155 + 2 * frame_thickness, 40 + 2 * frame_thickness),
+            screenSizeX / 4 - frame_thickness, screenSizeY / 3.5 - frame_thickness, 155 + 2 * frame_thickness,
+            40 + 2 * frame_thickness),
                          frame_thickness)
         pygame.draw.rect(screen, white, (screenSizeX / 4, screenSizeY / 3.5, 155, 40))
         volume_text = font.render("Volume: {}".format(int(self.volume_level * 100)), True, black)
@@ -126,7 +130,8 @@ class VolumeControl:
         screen.blit(minus_text, (530, 205))
 
         pygame.draw.rect(screen, frame_color, (
-            screenSizeX / 2 - frame_thickness, screenSizeY / 3.5 - frame_thickness, 120 + 2 * frame_thickness, 40 + 2 * frame_thickness),
+            screenSizeX / 2 - frame_thickness, screenSizeY / 3.5 - frame_thickness, 120 + 2 * frame_thickness,
+            40 + 2 * frame_thickness),
                          frame_thickness)
         pygame.draw.rect(screen, white, (screenSizeX / 2, screenSizeY / 3.5, 120, 40))  # Play/Stop button
         play_stop_text = font.render("Play/Stop", True, black)
@@ -137,7 +142,7 @@ class VolumeControl:
             mouse_x, mouse_y = pygame.mouse.get_pos()
             if 590 <= mouse_x <= 630 and 190 <= mouse_y <= 230:
                 self.adjust_volume(10)  # Increase volume
-            elif 250 <= mouse_x <= 290 and 10 <= mouse_y <= 50:
+            elif 510 <= mouse_x <= 550 and 190 <= mouse_y <= 230:
                 self.adjust_volume(-10)  # Decrease volume
             elif 650 <= mouse_x <= 750 and 200 <= mouse_y <= 250:
                 if self.music_playing:
@@ -156,7 +161,11 @@ class ThemeControl:
         self.set_theme()
 
     def set_theme(self):
-        self.background_color = all_themes[self.current_theme-1]['backgroundColor']
+
+        global all_themes
+        print(all_themes[self.current_theme-1])
+        props.background_color = all_themes[self.current_theme - 1]['backgroundColor']
+        print(props.background_color)
         self.button_color = white
         self.text_color = black
 
@@ -169,14 +178,13 @@ class ThemeControl:
         # Draw theme label
         frame_thickness = 5
         pygame.draw.rect(screen, frame_color, (
-        screenSizeX/3.5 - frame_thickness, screenSizeY/2.1- frame_thickness, 125 + 2 * frame_thickness, 50 + 2 * frame_thickness),
+            screenSizeX / 3.5 - frame_thickness, screenSizeY / 2.1 - frame_thickness, 125 + 2 * frame_thickness,
+            50 + 2 * frame_thickness),
                          frame_thickness)
-        pygame.draw.rect(screen, self.button_color, (screenSizeX/3.5, screenSizeY/2.1, 125, 50))
+        pygame.draw.rect(screen, self.button_color, (screenSizeX / 3.5, screenSizeY / 2.1, 125, 50))
 
         theme_text = font.render("Theme: {}".format(self.current_theme), True, self.text_color)
         screen.blit(theme_text, (380, 345))
-
-
 
         # Draw theme switch button
         pygame.draw.rect(screen, frame_color, (
@@ -194,7 +202,6 @@ class ThemeControl:
                 self.switch_theme()
 
 
-
 class Options:
     def __init__(self):
         self.clicked = False
@@ -205,7 +212,7 @@ class Options:
         # Draw frame around the button
         frame_thickness = 5
         pygame.draw.rect(screen, frame_color, (
-        100 - frame_thickness, 500 - frame_thickness, 120 + 2 * frame_thickness, 40 + 2 * frame_thickness),
+            100 - frame_thickness, 500 - frame_thickness, 120 + 2 * frame_thickness, 40 + 2 * frame_thickness),
                          frame_thickness)
         # Draw button
         pygame.draw.rect(screen, white, (100, 500, 120, 40))
@@ -252,8 +259,9 @@ class ToggleButton:
             # Draw frame around the rectangle
             frame_thickness = 5
             pygame.draw.rect(screen, frame_color, (
-            self.position[0] + 150 - frame_thickness, self.position[1] + 5 - frame_thickness, 30 + 2 * frame_thickness,
-            30 + 2 * frame_thickness), frame_thickness)
+                self.position[0] + 150 - frame_thickness, self.position[1] + 5 - frame_thickness,
+                30 + 2 * frame_thickness,
+                30 + 2 * frame_thickness), frame_thickness)
 
             # Draw rectangle
             pygame.draw.rect(screen, green, (self.position[0] + 150, self.position[1] + 5, 30, 30))
@@ -271,30 +279,43 @@ class ToggleButton:
                     self.checkbox_checked = not self.checkbox_checked
 
 
-
 def back_button(screen, create_back_button):
+    global lineS, lineBoxS
+    screenSizeX, screenSizeY = screen.get_size()
     full_back_button = create_back_button(screen)
     if playMark == 1:
         screen.blit(full_back_button['backS'], full_back_button['backBoxS'])
     else:
         screen.blit(full_back_button['backL'], full_back_button['backBoxL'])
+    imp = pygame.image.load(".\\imgs\\line1.png")
+    lineS = pygame.transform.scale(imp, (screenSizeX+6, screenSizeY/4.5))
+    lineBoxS = lineS.get_rect()
+    lineBoxS.center = (screenSizeX / 2-2, screenSizeY/1.1)
+    screen.blit(lineS, lineBoxS)
+    imp = pygame.image.load(".\\imgs\\pixel.jpg")
+    lineS = pygame.transform.scale(imp, (screenSizeX/5, screenSizeX / 5))
+    lineBoxS = lineS.get_rect()
+    lineBoxS.center = (screenSizeX / 1.25, screenSizeY / 3)
+    screen.blit(lineS, lineBoxS)
     return full_back_button
 
 
 # Create an instance of GameControl
 game_control = GameControl()
 
-running = True
 
 def settings_button_pressed(screen1, create_back_button):
     global screen
     global running
     running = True
     screen = screen1
+
     while running:
+
         game_control.draw(screen1)
+        # print(props.backgroundColor)
         screen.fill(props.backgroundColor)
+
         game_control.update(back_button(screen, create_back_button))
+
     home.checkHomeButtons((0, 0), screen)
-
-
