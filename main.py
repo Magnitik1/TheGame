@@ -17,7 +17,7 @@ import settings
 pygame.init()
 # screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 screen = pygame.display.set_mode((1300, 700), pygame.RESIZABLE)
-pygame.display.set_caption('The Game')
+pygame.display.set_caption('Jump Master')
 screenSizeX, screenSizeY = screen.get_size()
 screen.fill(props.backgroundColor)
 home.create_play_button(screen)
@@ -26,7 +26,7 @@ home.create_settings_button(screen)
 full_back_button = home.create_back_button(screen)
 
 font = pygame.font.Font(props.globalFont, int(screenSizeX / 11))
-text = font.render('The Game', True, 'green')
+text = font.render('Jump Master', True, 'green')
 textRect = text.get_rect()
 textRect.center = (screenSizeX / 2, screenSizeY / 5.5)
 
@@ -74,6 +74,7 @@ while True:
                     can_jump = True
                     speed = 0.0010
             if can_jump and event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+                gameBasics.jumps += 1
                 in_mid_jump = True
             if in_mid_jump:
                 if y_position > screenSizeY / 2.8:
@@ -87,6 +88,7 @@ while True:
                     playMark = 1
                     props.page = 'play'
                     print("back1")
+                    gameBasics.jumps = 0
                     if not is_full_screen:
                         pygame.display.set_mode((screenSizeX, screenSizeY), pygame.RESIZABLE)
             if event.type == pygame.MOUSEMOTION:
@@ -99,7 +101,7 @@ while True:
                 # screenSizeX, screenSizeY = screen.get_size()
                 font = pygame.font.Font(props.globalFont, int(screenSizeX / 11))
                 textRect.center = (screenSizeX / 2, screenSizeY / 5.5)
-                text = font.render('The Game', True, (colorR, colorG, colorB))
+                text = font.render('Jump Master', True, (colorR, colorG, colorB))
                 colorR += cr
                 colorG += cg
                 colorB += cb

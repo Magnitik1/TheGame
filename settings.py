@@ -29,7 +29,7 @@ class GameControl:
         self.theme_control = ThemeControl()
         self.options_button = Options()
         self.buttons = [
-                           ToggleButton(f"Awesome Feature", (250, 500))
+                           ToggleButton(f"FPS", (250, 500))
                        ] + [
                            ToggleButton(f"Button1", (500, 500))
                        ] + [

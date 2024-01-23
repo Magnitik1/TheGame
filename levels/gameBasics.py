@@ -9,7 +9,7 @@ pygame.init()
 def draw_a_cube(x, y):
     pass
 
-playMark = 0
+playMark = 1
 def checkBackButtons(pos, screen, full_back_button):
     global playMark
     if full_back_button['backBoxS'].collidepoint(pos) and playMark == 1:  # HOVERED
@@ -18,11 +18,13 @@ def checkBackButtons(pos, screen, full_back_button):
         playMark = 1
 
 
+jumps = 0
 
 
 
 def draw_character(screen, y_position, full_back_button):
     global playMark
+    global jumps
     screen.fill(props.backgroundColor)
     screenSizeX, screenSizeY = screen.get_size()
     imp = pygame.image.load(f".\\imgs\\{skins.curren_skin}")
@@ -36,6 +38,12 @@ def draw_character(screen, y_position, full_back_button):
     floorBox = floor.get_rect()
     floorBox.center = (screenSizeX/2, screenSizeY - screenSizeY / 20,)
     screen.blit(floor, floorBox)
+
+    font = pygame.font.Font(props.globalFont, int(screenSizeX / 30))
+    text = font.render(f'Jumps amount: {jumps}', True, props.fontColor)
+    textRect = text.get_rect()
+    textRect.center = (screenSizeX / 1.5, screenSizeY / 4)
+    screen.blit(text, textRect)
 
     # pygame.draw.rect(screen, 'red', (0, screenSizeY - screenSizeY / 10, screenSizeX, screenSizeY / 5)) # x, y, width, height
     if playMark == 1:
